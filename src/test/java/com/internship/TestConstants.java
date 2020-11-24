@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class TestConstants {
 
     public static final long ID_ONE = 1L;
+    public static final long ID_TWO = 2L;
     public static final double DISCOUNT_PERCENTAGE_ONE = 10;
 
     public static final LocalDate DISCOUNT_ONE_START_DATE = LocalDate.of(2020, 9, 3);
@@ -20,6 +21,7 @@ public class TestConstants {
     public static final double DISCOUNT_PRICE_ONE = 135;
 
     public static final String BOOK_TITLE_ONE = "Frankenstein";
+    public static final String BOOK_TITLE_TWO = "Franklinstein";
     public static final String LANGUAGE = "English";
     public static final String VOUCHER_TITLE_ONE = "Voucher";
 

@@ -1,11 +1,7 @@
 package com.internship.bookstore.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,12 +21,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder(toBuilder = true)
 public class User {
 
     @Id
     @SequenceGenerator(name = "user_id_generator", sequenceName = "seq_users", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     private Long id;
+
+    @NotNull
+    @Column
+    private String userName;
 
     @NotNull
     @Column
