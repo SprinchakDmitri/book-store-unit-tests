@@ -1,5 +1,6 @@
 package com.internship.bookstore.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.internship.bookstore.api.controller.WishListRestController;
 import com.internship.bookstore.api.dto.WishListRequestDto;
 import com.internship.bookstore.api.dto.WishListResponseDto;
@@ -20,7 +21,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import static com.internship.TestConstants.ID_ONE;
 import static com.internship.bookstore.utils.WishListTestUtils.*;
@@ -83,4 +83,31 @@ public class WishListRestControllerTest extends BaseController {
     }
 
 
-  }
+    @Test
+    @WithMockUser
+    public void shouldSaveWishList() throws Exception {
+        when(wishListService.save(any(WishListRequestDto.class))).thenReturn(WISH_LIST_RESPONSE_DTO);
+
+        mockMvc.perform(post("/wishlists")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(WISH_LIST_REQUEST_DTO)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(createExpectedBody(WISH_LIST_RESPONSE_DTO)));
+
+        verify(wishListService).save(any(WishListRequestDto.class));
+    }
+
+    @Test
+    @WithMockUser
+    void shouldUpdateWishList() throws Exception{
+        when(wishListService.update(any(WishListRequestDto.class))).thenReturn(WISH_LIST_RESPONSE_DTO_UPDATED);
+
+        mockMvc.perform(put("/wishlists/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(WISH_LIST_REQUEST_DTO_TO_UPDATE)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(createExpectedBody(WISH_LIST_RESPONSE_DTO_UPDATED)));
+
+}}

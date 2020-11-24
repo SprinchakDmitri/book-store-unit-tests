@@ -114,5 +114,23 @@ public class WishListServiceTest {
         assertEquals(expectedWishListResponseDto.getUserEmail(),actualResponseDto.getUserEmail());
     }
 
+    @Test
+    public void shouldThrowExceptionIfBookNotExist(){
+
+        when(bookRepository.findBookById(ID_ONE)).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(USER_ONE.getEmail())).thenReturn(Optional.of(USER_ONE));
+
+        assertThrows(IllegalArgumentException.class,()-> wishListService.save(WISH_LIST_REQUEST_DTO));
+    }
+
+       @Test
+    public void shouldThrowExceptionIfUserNotExist(){
+
+        when(userRepository.findByEmail(USER_ONE.getEmail())).thenReturn(Optional.empty());
+        
+        assertThrows(IllegalArgumentException.class,()->{
+            wishListService.save(WISH_LIST_REQUEST_DTO);
+        });
+    }
 
 }

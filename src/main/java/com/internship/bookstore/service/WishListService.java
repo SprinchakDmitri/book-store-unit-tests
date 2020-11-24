@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class WishListService {
 
     ValidateWishListService validateWishListService;
 
+    @Transactional
     public WishListResponseDto save(WishListRequestDto wishListRequestDto) {
         log.info("Saving the wish list with userEmail [{}] and bookId [{}]", wishListRequestDto.getUserEmail(),
                 wishListRequestDto.getBookId());
@@ -62,7 +64,7 @@ public class WishListService {
         return mapWishListToWishListResponseDto.apply(wishList);
     }
 
-
+    @Transactional
     public WishListResponseDto update(WishListRequestDto wishListRequestDto) {
         log.info("Updating the wish list with userId [{}] and bookId [{}]", wishListRequestDto.getUserEmail(),
                 wishListRequestDto.getBookId());
@@ -87,7 +89,7 @@ public class WishListService {
 
 
         WishList wishList = mapWishListRequestDtoToWishList.apply(wishListRequestDto);
-        //wishList.setId(wishListRequestDto.getId());
+
         wishList.setBook(book);
         wishList.setUser(user);
 
